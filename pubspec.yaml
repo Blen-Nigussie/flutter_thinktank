@@ -1,0 +1,70 @@
+name: thinktank
+description: A new Flutter project.
+
+# Prevent publishing to pub.dev
+publish_to: 'none'
+
+# Versioning
+version: 1.0.0+1
+
+# Dart SDK environment
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+# Main dependencies
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Cupertino Icons for iOS-style icons
+  cupertino_icons: ^1.0.2
+
+  # State Management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Network
+  dio: ^5.4.0
+  connectivity_plus: ^6.1.4
+
+  # Local Storage
+  shared_preferences: ^2.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Utils
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.8.1
+  intl: ^0.20.2
+  logger: ^2.0.2+1
+
+  # UI
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Linting
+  flutter_lints: ^6.0.0
+
+  # Code Generation
+  build_runner: ^2.4.7
+  freezed: ^3.0.6
+  json_serializable: ^6.7.1
+  riverpod_generator: ^2.6.5
+
+  # Testing
+  integration_test:
+    sdk: flutter
+  mockito: ^5.4.4
+
+flutter:
+  uses-material-design: true
+
+  # Asset directories
+  assets:
+    - assets/images/
+    - assets/icons/
