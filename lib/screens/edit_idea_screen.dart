@@ -6,9 +6,9 @@ class EditIdeaScreen extends StatelessWidget {
   final String ideaId;
 
   const EditIdeaScreen({
-    Key? key,
+    super.key,
     required this.ideaId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,8 @@ class EditIdeaScreen extends StatelessWidget {
 }
 
 class EditIdeaContent extends StatelessWidget {
+  const EditIdeaContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<EditIdeaViewModel>(context);
@@ -77,7 +79,7 @@ class EditIdeaContent extends StatelessWidget {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFFFA500)),
                         ),
-                        focusedLabelStyle: TextStyle(color: Color(0xFFFFA500)),
+                        floatingLabelStyle: TextStyle(color: Color(0xFFFFA500)),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -96,7 +98,7 @@ class EditIdeaContent extends StatelessWidget {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFFFA500)),
                         ),
-                        focusedLabelStyle: TextStyle(color: Color(0xFFFFA500)),
+                        floatingLabelStyle: TextStyle(color: Color(0xFFFFA500)),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -114,7 +116,7 @@ class EditIdeaContent extends StatelessWidget {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFFFA500)),
                         ),
-                        focusedLabelStyle: TextStyle(color: Color(0xFFFFA500)),
+                        floatingLabelStyle: TextStyle(color: Color(0xFFFFA500)),
                       ),
                     ),
                     SizedBox(height: 24),
@@ -159,7 +161,7 @@ class EditIdeaContent extends StatelessWidget {
 
             if (uiState.updateSuccess)
               Container(
-                color: Colors.black.withOpacity(0.7),
+                color: Colors.black.withAlpha((0.7 * 255).toInt()),
                 child: Center(
                   child: Container(
                     margin: EdgeInsets.all(32),
@@ -189,7 +191,7 @@ class EditIdeaContent extends StatelessWidget {
                         Text(
                           'Redirecting back...',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withAlpha((0.8 * 255).toInt()),
                             fontSize: 16,
                           ),
                         ),

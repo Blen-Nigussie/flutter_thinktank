@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import '../models/idea.dart';
-import '../models/idea_submission_request.dart';
-import '../models/idea_update_request.dart';
-
+import '/models/idea_submission_ui_state.dart';
+  
 class IdeaApi {
   final Dio _dio;
 

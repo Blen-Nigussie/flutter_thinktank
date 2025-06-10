@@ -2,6 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/io.dart';
 import 'dart:io';
+import '/data/api/idea_api.dart';
+import '/data/api/feedback_api.dart';
+import '/data/api/auth_api.dart';
+import '/data/api/user_api.dart';
+import '/data/api/api_service.dart';
 
 class ApiClient {
   // Change this to your computer's IP address if testing on a physical device
@@ -41,11 +46,13 @@ class ApiClient {
 
       // Configure SSL for HTTPS
       if (baseUrl.startsWith('https')) {
-        (_dio!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-            (HttpClient client) {
-          client.badCertificateCallback =
-              (X509Certificate cert, String host, int port) => true;
-          return client;
+        (_dio!.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+          final HttpClient httpClient = HttpClient()
+            ..badCertificateCallback = (X509Certificate cert, String host, int port) {
+              // Allow self-signed certificates for development purposes
+              return true; // Change this to false in production
+            };
+          return httpClient;
         };
       }
     }

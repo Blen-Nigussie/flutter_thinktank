@@ -36,6 +36,7 @@ class User {
       };
 }
 
+
 class UpdateUserRequest {
   final String firstName;
   final String lastName;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/login_page.dart';
+import 'screens/login_screen.dart';
 import 'screens/register_page.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/idea_submission_screen.dart';
@@ -10,12 +10,14 @@ import 'routes.dart';
 class Navigation {
   static Map<String, WidgetBuilder> getRoutes() {
     return {
-      Screen.login: (context) => LoginPage(),
+      Screen.login: (context) => LoginScreen(),
       Screen.register: (context) => RegisterPage(),
       Screen.home: (context) => DashboardScreen(),
       Screen.ideaSubmission: (context) => IdeaSubmissionScreen(),
       Screen.ideas: (context) => IdeasScreen(),
-      Screen.editIdea: (context) => EditIdeaScreen(),
+      Screen.editIdea: (context) => EditIdeaScreen( 
+        ideaId: ModalRoute.of(context)?.settings.arguments as String? ?? '',
+      ),
     };
   }
 

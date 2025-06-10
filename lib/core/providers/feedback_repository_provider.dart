@@ -7,4 +7,4 @@ final feedbackRepositoryProvider = Provider<FeedbackRepository>((ref) {
   final apiService = ref.watch(apiServiceProvider);
   final networkInfo = ref.watch(networkInfoProvider);
   return FeedbackRepository(apiService, networkInfo);
-}); 
+});

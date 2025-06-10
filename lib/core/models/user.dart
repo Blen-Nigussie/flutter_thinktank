@@ -12,4 +12,22 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  
+  @override
+  String get email => throw UnimplementedError('Email is not implemented in this context');
+
+  @override
+  String get id => throw UnimplementedError('ID is not implemented in this context');
+
+  @override
+  String get name => throw UnimplementedError('Name is not implemented in this context');
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+    };
+  }
 } 

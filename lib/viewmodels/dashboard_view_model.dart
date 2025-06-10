@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:developer' as developer;
 import '../models/dashboard_ui_state.dart';
 import '../models/idea.dart';
 import '../services/api_service.dart';
@@ -27,25 +28,24 @@ class DashboardViewModel extends ChangeNotifier {
         return;
       }
 
-      final formattedToken = token.startsWith("Bearer ") ? token : "Bearer $token";
-      print("\n=== Loading Ideas for Dashboard ===");
-      print("Token format check: ${token.startsWith("Bearer ") ? "Already has Bearer" : "Adding Bearer"}");
+      developer.log("=== Loading Ideas for Dashboard ===", name: 'DashboardViewModel');
+      developer.log("Token format check: ${token.startsWith("Bearer ") ? "Already has Bearer" : "Adding Bearer"}", name: 'DashboardViewModel');
 
       // Try admin endpoint first
-      print("Trying admin endpoint first");
+      developer.log("Trying admin endpoint first", name: 'DashboardViewModel');
       final feedbackResponse = await _apiService.getAllFeedback(formattedToken);
-      print("Feedback API Response code: ${feedbackResponse.statusCode}");
+      developer.log("Feedback API Response code: ${feedbackResponse.statusCode}", name: 'DashboardViewModel');
 
       if (feedbackResponse.statusCode == 200 && feedbackResponse.body != null) {
         // Admin flow
-        print("Admin flow: Processing feedback");
+        developer.log("Admin flow: Processing feedback", name: 'DashboardViewModel');
         final allFeedback = json.decode(feedbackResponse.body);
-        print("Total feedback received: ${allFeedback.length}");
+        developer.log("Total feedback received: ${allFeedback.length}", name: 'DashboardViewModel');
 
         // Filter for approved feedback
         final approvedFeedback = allFeedback.where((feedback) =>
             feedback['status'] == 'Approved' && feedback['idea'] != null).toList();
-        print("Approved feedback: ${approvedFeedback.length}");
+        developer.log("Approved feedback: ${approvedFeedback.length}", name: 'DashboardViewModel');
 
         // Get unique idea IDs from approved feedback
         final approvedIdeaIds = approvedFeedback
@@ -53,7 +53,7 @@ class DashboardViewModel extends ChangeNotifier {
             .where((id) => id != null)
             .toSet()
             .toList();
-        print("Unique approved idea IDs: ${approvedIdeaIds.length}");
+        developer.log("Unique approved idea IDs: ${approvedIdeaIds.length}", name: 'DashboardViewModel');
 
         // Get all ideas and filter for approved ones
         final ideasResponse = await _apiService.getAllIdeas(formattedToken);
@@ -62,9 +62,9 @@ class DashboardViewModel extends ChangeNotifier {
           final approvedIdeas = allIdeas.where((idea) =>
               approvedIdeaIds.contains(idea['id'])).toList();
 
-          print("Admin: Approved ideas loaded: ${approvedIdeas.length}");
+          developer.log("Admin: Approved ideas loaded: ${approvedIdeas.length}", name: 'DashboardViewModel');
           approvedIdeas.forEach((idea) {
-            print("Admin: Approved idea: ${idea['id']} - ${idea['title']}");
+            developer.log("Admin: Approved idea: ${idea['id']} - ${idea['title']}", name: 'DashboardViewModel');
           });
 
           _updateState(
@@ -73,7 +73,7 @@ class DashboardViewModel extends ChangeNotifier {
           );
         } else {
           final errorBody = ideasResponse.body;
-          print("Admin: Failed to load ideas: ${ideasResponse.statusCode} - $errorBody");
+          developer.log("Admin: Failed to load ideas: ${ideasResponse.statusCode} - $errorBody", name: 'DashboardViewModel');
           _updateState(
             error: "Failed to load ideas: ${errorBody ?? "Unknown error"}",
             isLoading: false,
@@ -81,17 +81,17 @@ class DashboardViewModel extends ChangeNotifier {
         }
       } else {
         // Regular user flow - use public ideas endpoint
-        print("Regular user flow: Getting public ideas");
+        developer.log("Regular user flow: Getting public ideas", name: 'DashboardViewModel');
         try {
           final publicResponse = await _apiService.getPublicIdeas();
-          print("Public ideas API Response code: ${publicResponse.statusCode}");
-          print("Public ideas API Response body: ${publicResponse.body}");
+          developer.log("Public ideas API Response code: ${publicResponse.statusCode}", name: 'DashboardViewModel');
+          developer.log("Public ideas API Response body: ${publicResponse.body}", name: 'DashboardViewModel');
 
           if (publicResponse.statusCode == 200 && publicResponse.body != null) {
             final publicIdeas = json.decode(publicResponse.body);
-            print("Public ideas loaded: ${publicIdeas.length}");
+            developer.log("Public ideas loaded: ${publicIdeas.length}", name: 'DashboardViewModel');
             publicIdeas.forEach((idea) {
-              print("Public idea: ${idea['id']} - ${idea['title']}");
+              developer.log("Public idea: ${idea['id']} - ${idea['title']}", name: 'DashboardViewModel');
             });
 
             _updateState(
@@ -100,14 +100,14 @@ class DashboardViewModel extends ChangeNotifier {
             );
           } else {
             final errorBody = publicResponse.body;
-            print("Failed to load public ideas: ${publicResponse.statusCode} - $errorBody");
+            developer.log("Failed to load public ideas: ${publicResponse.statusCode} - $errorBody", name: 'DashboardViewModel');
             _updateState(
               error: "Failed to load ideas: ${errorBody ?? "Unknown error"}",
               isLoading: false,
             );
           }
         } catch (e) {
-          print("Error in public ideas flow: $e");
+          developer.log("Error in public ideas flow: $e", name: 'DashboardViewModel', error: e);
           _updateState(
             error: "Error loading ideas: $e",
             isLoading: false,
@@ -115,12 +115,13 @@ class DashboardViewModel extends ChangeNotifier {
         }
       }
     } catch (e) {
-      print("Error loading ideas: $e");
+      developer.log("Error loading ideas: $e", name: 'DashboardViewModel', error: e);
       _updateState(
         error: e.toString(),
         isLoading: false,
       );
     }
+  }
   }
 
   void onDrawerOpen() {
@@ -145,4 +146,3 @@ class DashboardViewModel extends ChangeNotifier {
     );
     notifyListeners();
   }
-} 

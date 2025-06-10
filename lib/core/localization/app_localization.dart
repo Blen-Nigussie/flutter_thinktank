@@ -24,6 +24,21 @@ class AppLocalization {
       'feedback': 'Comentarios',
       'profile': 'Perfil',
     },
+    'fr': {
+      'login': 'Connexion',
+      'register': 'S’inscrire',
+      'ideas': 'Idées',
+      'feedback': 'Retour d’information',
+      'profile': 'Profil',
+    },
+    // Add more languages here
+    'de': {
+      'login': 'Anmelden',
+      'register': 'Registrieren',
+      'ideas': 'Ideen',
+      'feedback': 'Feedback',
+      'profile': 'Profil',
+    },
   };
 
   String get(String key) {

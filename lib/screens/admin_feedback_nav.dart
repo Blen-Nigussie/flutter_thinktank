@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../viewmodels/feedback_view_model.dart';
 import '../models/idea.dart';
 import '../services/token_manager.dart';
 import 'idea_pool_list_screen.dart';
 import 'feedback_screen.dart';
 import 'reviewed_ideas_screen.dart';
 import 'edit_feedback_screen.dart';
+import '../viewmodels/feedback_view_model.dart';
 
 class AdminFeedbackNav extends StatelessWidget {
   final String token;
@@ -15,19 +15,19 @@ class AdminFeedbackNav extends StatelessWidget {
   final Function(Idea) onDeleteFeedback;
 
   const AdminFeedbackNav({
-    Key? key,
+    super.key,
     required this.token,
     required this.navController,
     required this.onEditFeedback,
     required this.onDeleteFeedback,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final tokenManager = TokenManager();
-    final userRole = tokenManager.getUserRole();
+    final userRole = tokenManager.getToken();
 
-    if (userRole != "admin") {
+    if (userRole != 'admin') {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         navController.pushReplacementNamed('dashboard');
       });
@@ -58,14 +58,14 @@ class AdminFeedbackNav extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => Consumer<FeedbackViewModel>(
                   builder: (context, viewModel, _) {
-                    final selectedIdea = viewModel.uiState.selectedIdea;
-                    if (selectedIdea != null) {
-                      return FeedbackScreen(
-                        navController: Navigator.of(context),
-                        viewModel: viewModel,
-                      );
+                    final feedbackList = viewModel.feedbackServices.getFeedback();
+                    final selectedIdea = (feedbackList is List && feedbackList.isNotEmpty) ? feedbackList.first : null;
+                    if (selectedIdea == null) {
+                      return const SizedBox.shrink();
                     }
-                    return const SizedBox.shrink();
+                    return FeedbackScreen(
+                      viewModel: viewModel,
+                    );
                   },
                 ),
               );

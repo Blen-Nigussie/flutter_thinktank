@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
-import '../models/auth_response.dart';
-import '../models/login_request.dart';
-import '../models/register_request.dart';
+import '/data/models/auth_models.dart';
 
 class AuthApi {
   final Dio _dio;

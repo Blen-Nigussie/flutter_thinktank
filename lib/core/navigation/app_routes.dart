@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/user.dart';
-import '../screens/login_screen.dart';
-import '../screens/register_screen.dart';
-import '../screens/idea_list_screen.dart';
-import '../screens/idea_detail_screen.dart';
-import '../screens/feedback_screen.dart';
-import '../screens/profile_screen.dart';
+import '../auth/auth_ui_state.dart';
+import '/screens/login_screen.dart';
+import '/screens/register_screen.dart';
+import '/screens/idea_list_screen.dart';
+import '/screens/idea_detail_screen.dart';
+import '/screens/feedback_screen.dart';
+import '/screens/profile_screen.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -27,6 +27,7 @@ class AppRoutes {
   }
 
   static String getInitialRoute(AuthUiState authState) {
+    // ignore: unnecessary_null_comparison
     return authState.user != null ? ideaList : login;
   }
 } 

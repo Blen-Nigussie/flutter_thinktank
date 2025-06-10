@@ -21,4 +21,6 @@ class ApiConfig {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
+
+  get apiService => null;
 } 

@@ -4,7 +4,7 @@ part 'feedback.freezed.dart';
 part 'feedback.g.dart';
 
 @freezed
-class Feedback with _$Feedback {
+abstract class Feedback with _$Feedback {
   const factory Feedback({
     required String id,
     required String ideaId,
